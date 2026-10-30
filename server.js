@@ -31,6 +31,16 @@ app.post("/api/volunteers", (req, res) => {
     res.status(201).json(newVolunteer);
 });
 
+app.patch("/api/volunteers/:id", (req, res) => {
+    const id = Number(req.params.id);
+    const volunteer = volunteers.find((v) => v.id === id);
+    if (!volunteer) {
+        return res.status(404).json({error: "Volunteer not found" });
+    }
+    volunteer.skills = req.body.skills;
+    res.json(volunteer);
+});
+
 app.listen(PORT, () => {
     console.log('Kindred server running on port ${PORT}');
 });
